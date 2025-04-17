@@ -1,0 +1,16 @@
+@layer reset, variables, components, utilities;
+
+@import "./reset.css" layer(reset);
+@import "./variables.css" layer(variables);
+@import "./utilities.css" layer(utilities);
+
+@import "../component/NavBar/style.css" layer(components);
+@import "../component/Movie/movie.css" layer(components);
+@import "../component/MovieDetail/moviedetail.css" layer(components);
+@import "../component/MovieCategory/style.css" layer(components);
+@import "../component/MovieEnAvant/style.css" layer(components);
+@import "../component/Favorite/style.css" layer(components);
+
+header{
+    width: 100%;
+}

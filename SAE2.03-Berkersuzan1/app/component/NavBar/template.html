@@ -1,0 +1,20 @@
+<nav class="navbar font-sans">
+  <ul class="navbar__list">
+    <li class="navbar__item" onclick="C.Accueil()">Accueil</li>
+    <li class="navbar__item" onclick="C.Favorite()">Favoris</li>
+      <div class="navbar__profil">
+        <label for="profil-select" class="navbar__label"></label>
+        <select id="profil-select" class="navbar__select" onchange="{{handler}}">
+          {{profil}}
+        </select>
+    
+        <img
+          id="profil-image"
+          class="navbar__image"
+          src="https://mmi.unilim.fr/~berkersuzan1/SAE2.03-Berkersuzan/SAE2.03-Berkersuzan1/server/images/{{avatar}}"
+          alt="Photo de profil"
+        />
+    </div>
+  </ul>
+</nav>
+

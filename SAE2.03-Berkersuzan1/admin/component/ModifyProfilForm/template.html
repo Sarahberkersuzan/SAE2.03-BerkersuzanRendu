@@ -1,0 +1,14 @@
+<div class="modifyProfil">
+
+    <h2 class="modifyProfil__title">Modifier un Profil</h2>
+    <form class="modifyProfil__form">
+        <select id="modifyProfil-select"  name="id" class="modifyProfil__form" onchange="{{hProfil}}">
+            {{profil}}
+          </select>
+        <input required type="text" name="nom" placeholder="Saisir le nom du profil"/>
+        <input required type="text" name="avatar" placeholder="Saisir le nom de l'avatar" />
+        <input required type="number" name="age" placeholder="Saisir la restriction d'age" />
+        <input onclick="{{handler}}" type="button" value="Modifier le profil" name="todo" />
+    </form>
+
+</div>

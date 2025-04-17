@@ -1,0 +1,125 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 40px 20px;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-color: #1F2937; 
+  animation: fadeIn 1s ease-in;
+}
+.addMovie {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  padding: 40px;
+  background: #2D3748; 
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.7s ease-out;
+  
+}
+
+.addMovie__title {
+  position: relative;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #F9FAFB; 
+}
+
+.addMovie__title::after {
+  content: '';
+  display: block;
+  margin: 10px auto 0;
+  width: 60px;
+  height: 4px;
+  background-color: #4A5568; 
+  border-radius: 2px;
+}
+
+.addMovie__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px;
+}
+
+.addMovie__form input,
+.addMovie__form select {
+  padding: 14px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #4A5568; 
+  background-color: #2D3748;
+  color: #E2E8F0;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 0 transparent;
+}
+
+
+.addMovie__form input:nth-child(5), 
+.addMovie__form input:nth-child(7), 
+.addMovie__form input:nth-child(8) { 
+  grid-column: span 2;
+}
+.addMovie__form input:focus,
+.addMovie__form select:focus {
+  outline: none;
+  border-color: #63B3ED;
+  box-shadow: 0 0 8px #63B3ED;
+  background-color: #1A202C;
+}
+
+.addMovie__form input[type="button"],
+.addMovie__form input[type="submit"] {
+  padding: 14px;
+  background-color: #4A5568;
+  color: #F9FAFB;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.addMovie__form input[type="button"]:hover,
+.addMovie__form input[type="submit"]:hover {
+  transform: scale(1.05);
+  background-color: #2B4365;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    background: #1F2937;
+  }
+  to {
+    background-color: #2D3748;
+  }
+}
+
+
+
+
+
+
+  
+  
