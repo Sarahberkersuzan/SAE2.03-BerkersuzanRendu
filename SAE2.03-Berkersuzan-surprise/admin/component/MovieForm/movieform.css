@@ -1,0 +1,89 @@
+.addMovie {
+  position: relative;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 56rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.7rem 1.8rem rgba(0, 0, 0, 0.3);
+  background-color: var(--color-black); 
+}
+
+.addMovie__title {
+  position: relative;
+  margin-bottom: 1.8rem;
+  text-align: center;
+  font-size: 1.7rem;
+  color: var(--color-white); 
+}
+
+.addMovie__title::after {
+  content: '';
+  display: block; 
+  margin: 0.6rem auto 0;
+  width: 3.7rem;
+  height: 0.2rem;
+  background-color: var(--clr-bleu2); 
+  border-radius: 0.1rem;
+}
+
+.addMovie__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 1.2rem;
+}
+
+.addMovie__form input,
+.addMovie__form select {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 0.06rem solid var(--clr-bleu2); 
+  background-color: var(--color-black);
+  color: var(--color-white);
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 0 transparent;
+}
+
+.addMovie__form input:nth-child(5), 
+.addMovie__form input:nth-child(7), 
+.addMovie__form input:nth-child(8) { 
+  grid-column: span 2;
+}
+.addMovie__form input:focus,
+.addMovie__form select:focus {
+  outline: none;
+  border-color: var(--clr-bleu2);
+  box-shadow: 0 0 0.5rem var(--clr-bleu2);
+  background-color: #1A202C;
+}
+
+.addMovie__form input[type="button"],
+.addMovie__form input[type="submit"] {
+  padding: 0.8rem;
+  background: linear-gradient( var(--clr-bleu), var(--clr-bleu2));
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 0.2rem 0.9rem rgba(0, 0, 0, 0.2);
+}
+
+.addMovie__form input[type="button"]:hover,
+.addMovie input[type="submit"]:hover {
+  transform: scale(1.05);
+  background: var(--color-white);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+  color: var(--clr-bleu2);
+}
+
+
+
+
+
+
+
+  
+  

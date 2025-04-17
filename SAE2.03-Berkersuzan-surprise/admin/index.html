@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>SAE2.03 ADMIN</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/base.css" />
+</head>
+
+<body>
+  <section id="log"></section>
+  <section id="content"></section>
+  <section id="form"></section>
+  <section id="modifyProfil"></section>
+
+  <script type="module">
+    import { Log } from "./component/Log/script.js";
+    import { MovieForm } from "./component/MovieForm/script.js";
+    import { ProfilForm } from "./component/ProfilForm/script.js";
+    import { DataMovie } from "./data/dataMovie.js";
+    import {DataProfil} from "./data/dataProfil.js";
+    import {ModifyProfilForm} from "./component/ModifyProfilForm/script.js";
+    window.C = {};
+
+    C.handlerAddMovie = async function () {
+    let form = document.querySelector(".addMovie__form");
+    let fd = new FormData(form);
+    let inputs = form.querySelectorAll("input");
+    let isEmpty = false;
+
+    for (let i = 0; i < inputs.length; i++) {
+        if (!inputs[i].value) { 
+            isEmpty = true;
+            break;
+        }
+    }
+
+    if (isEmpty) {
+        V.renderLog("Veuillez remplir tous les champs");
+        return;
+    }
+
+    let res = await DataMovie.addMovie(fd);
+    if (res.success) {
+        V.renderLog("Le film a été ajouté avec succès");
+    } else {
+        V.renderLog("Erreur lors de l'ajout du film");
+    }
+};
+
+C.handlerAddProfil = async function () {
+    let form = document.querySelector(".addProfil__form");
+    let fd = new FormData(form);
+    let inputs = form.querySelectorAll("input");
+    let isEmpty = false;
+
+    for (let i = 0; i < inputs.length; i++) {
+        if (!inputs[i].value) { 
+            isEmpty = true;
+            break;
+        }
+    }
+
+    if (isEmpty) {
+        V.renderLog("Veuillez remplir tous les champs");
+        return;
+    }
+
+    let res = await DataProfil.addProfil(fd);
+    if (res.success) {
+        V.renderLog("Le profil a été ajouté avec succès");
+    } else {
+        V.renderLog("Erreur lors de l'ajout du profil");
+    }
+};
+
+    C.handlerModifyProfil = async function () {
+      let form = document.querySelector('.modifyProfil__form');
+      let fd = new FormData(form);
+      let res = await DataProfil.modifyProfil(fd);
+      V.renderLog(res);
+    };
+
+    C.loadProfils = async function() {
+        let profils = await DataProfil.readProfil();
+        let optionsHtml = "";
+        for (let i = 0; i < profils.length; i++) {
+          let profil = profils[i];
+          optionsHtml += `<option value="${profil.id}">${profil.nom}</option>`;
+        }
+        let select = document.querySelector('#modifyProfil-select');
+        if (select) {
+          select.innerHTML = optionsHtml;
+        }
+      };
+
+    C.start = function () {
+      V.renderLog("Démarrage de l'application");
+      V.renderForm("C.handlerAddMovie()");
+      V.renderProfilForm("C.handlerAddProfil()");
+      V.renderModifyProfilForm("C.handlerModifyProfil()");
+      C.loadProfils();
+    };
+
+    window.V = {};
+
+    V.renderLog = function (txt) {
+      let content = document.querySelector("#log");
+      content.innerHTML = Log.format(txt);
+    };
+
+    V.renderForm = function (handler) {
+      let content = document.querySelector("#content");
+      content.innerHTML = MovieForm.format(handler);
+    };
+
+    V.renderProfilForm = function (handler) {
+      let content = document.querySelector("#form");
+      content.innerHTML = ProfilForm.format(handler);
+    };
+    V.renderModifyProfilForm = function (handler) {
+      let content = document.querySelector("#modifyProfil");
+      content.innerHTML = ModifyProfilForm.format(handler);
+    };
+
+    C.start();
+  </script>
+</body>
+
+</html>

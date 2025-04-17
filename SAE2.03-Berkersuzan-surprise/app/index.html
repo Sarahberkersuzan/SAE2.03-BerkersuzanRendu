@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>SAE2.03 APP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/base.css" />
+</head>
+
+<body>
+  <header id="header"></header>
+  <section class="EnAvants" id="laUne"></section>
+  <section class="cards" id="content"></section>
+  <section class="movies-categories" id="category"></section>
+
+  <script type="module">
+    import { NavBar } from "./component/NavBar/script.js";
+
+    import { Movie } from "./component/Movie/script.js";
+    import { DataMovie } from "./data/dataMovie.js";
+    import { MovieDetail } from "./component/MovieDetail/script.js";
+    import { MovieCategory } from "./component/MovieCategory/script.js";
+    import { DataProfil } from "./data/dataProfil.js";
+    import { Favoris } from "./component/Favorite/script.js";
+    import { EnAvant } from "./component/MovieEnAvant/enAvant.js";
+
+
+    window.C = {};
+
+    C.profil = null;
+
+    C.start = async function () {
+      let profils = await DataProfil.requestProfil();
+      V.renderNavBar("C.handlerMovies()", "C.handlerProfil()", profils);
+      C.getAllMovies();
+      C.getCategories();
+      document.querySelector("#laUne").style.display = "block";
+      C.enAvant();
+    };
+
+
+    C.scrollLeft = function (id) {
+  console.log(`Scrolling left for ID: ${id}`);
+  const track = document.getElementById(id);
+  if (!track) {
+    console.error(`Element with ID '${id}' not found.`);
+    return;
+  }
+  track.scrollBy({ left: -415.008, behavior: "smooth" });
+};
+
+C.scrollRight = function (id) {
+  console.log(`Scrolling right for ID: ${id}`);
+  const track = document.getElementById(id);
+  if (!track) {
+    console.error(`Element with ID '${id}' not found.`);
+    return;
+  }
+  track.scrollBy({ left: 415.008, behavior: "smooth" }); // Défiler vers la droite
+};
+
+
+    C.enAvant = async function () {
+      let data = await DataMovie.enAvant();
+      V.renderEnAvant(data);
+    }
+
+    C.Accueil = function () {
+        if (C.profil) {
+          C.getAllMovies(C.profil.age); 
+        } else {
+          document.querySelector("#content").innerHTML =
+            "<p>Veuillez sélectionner un profil.</p>";
+        }
+      };
+    
+    C.getAllMovies = async function (age) {
+      let data = await DataMovie.requestMovies(age);
+      if (!Array.isArray(data) || data.length === 0) {
+        document.querySelector("#content").innerHTML =
+          "<p>Aucun film disponible pour votre tranche d'âge.</p>";
+        return;
+      }
+      V.renderMovieCategory(data);
+    };
+
+    C.handlerDetail = async function (id) {
+      let data = await DataMovie.requestMovieDetails(id);
+      V.renderMovieDetail(data.movie);
+    };
+
+    C.handlerMovies = function () {
+      C.getAllMovies(); 
+    };
+
+    C.handlerProfil = async function () {
+      const select = document.querySelector("#profil-select");
+      if (select.value === "") {
+        C.profil = null; 
+        document.querySelector("#content").innerHTML = "<p>Aucun profil sélectionné.</p>";
+        return;
+      }
+
+      let dataProfil = await DataProfil.readOne(select.value);
+      C.profil = dataProfil[0];
+
+      const profileImage = document.querySelector("#profil-image");
+      if (profileImage && C.profil.avatar) {
+        profileImage.src = `https://mmi.unilim.fr/~berkersuzan1/SAE2.03-Berkersuzan/SAE2.03-Berkersuzan-surprise/server/images/${C.profil.avatar}`;
+      }
+
+      C.getAllMovies(C.profil.age);
+    };
+
+    C.getCategories = async function () {
+      let categories = await DataMovie.requestMovies(99);
+      if (!Array.isArray(categories) || categories.length === 0) {
+        document.querySelector("#content").innerHTML =
+          "<p>Aucune catégorie disponible pour votre tranche d'âge.</p>";
+        return;
+      }
+      V.renderMovieCategory(categories);
+    };
+
+    C.addFavorite = async function (id_movie) {
+        if (!C.profil) {
+          alert("Sélectionnez un profil avant d'ajouter un film en favori.");
+          return;
+        }
+        let response = await fetch(
+          `https://mmi.unilim.fr/~berkersuzan1/SAE2.03-Berkersuzan/SAE2.03-Berkersuzan-surprise/server/script.php?todo=addToFavorite&id_profil=${C.profil.id}&id_movie=${id_movie}`
+        );
+        let result = await response.json();
+
+        if (result.error) {
+          alert("Le film à été ajouté aux favoris !");
+          let button = document.querySelector(
+            `button[onclick="C.addFavorite(${id_movie})"]`
+          );
+          if (button) {
+            button.classList.add("is-favoris");
+          }
+        } else {
+          alert(result.success || "Le film à été ajouté aux favoris!");
+        }
+      };
+
+      C.deleteFavorite = async function (id_movie) {
+        if (!C.profil) {
+          alert(
+            "Sélectionnez un profil avant de supprimer un film des favoris."
+          );
+          return;
+        }
+        let response = await fetch(
+          `https://mmi.unilim.fr/~berkersuzan1/SAE2.03-Berkersuzan/SAE2.03-Berkersuzan-surprise/server/script.php?todo=deleteFavorite&id_profil=${C.profil.id}&id_movie=${id_movie}`);
+
+        let result = await response.json();
+
+        if (result.success) {
+          alert("Le film à été supprimé des favoris !");
+          C.Favorite();
+        } else {
+          alert(result.error || "Erreur lors de la suppression du favori.");
+        }
+      };
+
+      C.Favorite = async function () {
+        if (!C.profil) {
+          alert("Sélectionnez un profil.");
+          return;
+        }
+
+        let response = await fetch(
+          `https://mmi.unilim.fr/~berkersuzan1/SAE2.03-Berkersuzan/SAE2.03-Berkersuzan-surprise/server/script.php?todo=readFavorite&id_profil=${C.profil.id}`
+        );
+        let favoris = await response.json();
+
+        let content = document.querySelector("#content");
+        if (!favoris || favoris.length === 0) {
+          content.innerHTML = "<p>Votre liste de favoris ne contient aucun films.</p>";
+          return;
+        }
+
+        content.innerHTML = Favoris.format(favoris);
+      };
+    window.V = {};
+
+    V.renderNavBar = function (handlerMovies, handlerProfil, profils) {
+      let header = document.querySelector("#header");
+      header.innerHTML = NavBar.format(handlerMovies, handlerProfil, profils);
+    };
+
+    V.renderMovie = function (data) {
+      let content = document.querySelector("#content");
+      content.innerHTML = Movie.format(data);
+    };
+
+    V.renderMovieDetail = function (data) {
+      let content = document.querySelector("#content");
+      content.innerHTML = MovieDetail.format(data);
+    };
+
+    V.renderMovieCategory = function (data) {
+      let content = document.querySelector("#content");
+      let formattedContent = "";
+      for (let category of data) {
+        formattedContent += MovieCategory.format(category);
+      }
+      content.innerHTML = formattedContent;
+    };
+
+    V.renderEnAvant = function (data) {
+      let content = document.querySelector("#laUne");
+      content.innerHTML = EnAvant.format(data);
+    }
+    C.start(); 
+  </script>
+</body>
+
+</html>
+<script type="module"></script>

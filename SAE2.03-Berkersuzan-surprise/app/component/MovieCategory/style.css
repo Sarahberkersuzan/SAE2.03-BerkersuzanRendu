@@ -1,0 +1,66 @@
+.movie-category h2 {
+    padding-left: 0.625rem;
+    margin-bottom: 1.5625rem;
+    text-align: left;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-white);
+    border-left: 0.25rem solid var(--clr-bleu2); 
+}
+
+.movie-category {
+    width: 100%;
+    max-width: 125rem; 
+    margin: 0;
+    padding-left: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    padding: 1rem 0;
+}
+
+.carousel__track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem;
+    scrollbar-width: none; 
+}
+.carousel__track::-webkit-scrollbar {
+    display: none; 
+}
+
+.carousel__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background-color: var(--gris-foncé);
+    color: var(--color-white);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem; 
+    border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    padding: 0; 
+}
+.carousel__button:hover {
+    background: linear-gradient(var(--clr-bleu), var(--clr-bleu2));
+}
+
+.carousel__button--left {
+    left: 0.5rem; 
+}
+.carousel__button--right {
+    right: 0.5rem; 
+}

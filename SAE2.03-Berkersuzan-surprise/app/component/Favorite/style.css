@@ -1,0 +1,8 @@
+.favorite {
+  padding: 2rem;
+  background-color: var(--color-white);
+  border-radius: 1rem;
+  max-width: 75rem; 
+  margin: 0 auto;
+  box-shadow: 0 0.2rem 0.7rem var(--noir-transparent); 
+  }

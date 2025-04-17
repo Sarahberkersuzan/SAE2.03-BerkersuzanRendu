@@ -1,0 +1,28 @@
+
+
+:root {
+  /* Primitive Tokens */
+  --color-black: hsl(0, 0%, 3%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-gray-light: hsl(0, 0%, 80%);
+  --color-gray: hsl(0, 0%, 50%);
+  --color-gray-dark: hsl(0, 0%, 20%);
+  --color-green: hsl(120, 100%, 37%);
+
+
+  /* Sementic Tokens */
+  --color-fg: var(--color-white);
+  --color-bg: var(--color-gray-dark);
+  --color-accent: var(--color-green);
+
+  --noir-transparent : rgba(0, 0, 0, 0.3);
+  --clr-beige :#989a9a;
+  --clr-bleu : #007AFF;
+  --clr-bleu2 : #00CCFF;
+  --bleu-foncé : #05061E;
+  --transparent : rgba(0, 0, 0, 0);
+  --blanc-beige :#dddddd;
+  --bleu-foncé2: #0f112d;
+  --gris-foncé : #2D2E3E;
+  --violet-foncé : #2D3748;
+}
